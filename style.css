@@ -117,4 +117,11 @@ body{
     cursor: pointer;
     border-radius: 3px;
     padding: 6px 10px;
+    opacity: 0.6;
+    pointer-events: auto;
+}
+
+.footer button.active{
+    opacity: 1;
+    pointer-events: auto;
 }

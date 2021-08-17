@@ -10,6 +10,8 @@ inputBox.onkeyup = ()=>{
         addBtn.classList.remove("active") //unactive the add button
     }
 }
+showTasks();//calling showTasks function
+
 
 // if user click on the add button
 
@@ -26,6 +28,8 @@ addBtn.onclick = ()=>{
     showTasks();//calling showTasks function
 }
 
+
+//function to add task list inside ul
 function showTasks(){
     let getLocalStorage = localStorage.getItem("New Todo");
     if(getLocalStorage == null){
@@ -33,9 +37,24 @@ function showTasks(){
     }else{
         listArr = JSON.parse(getLocalStorage); //transforming json string into js object
     }
+    const pendingNumb = document.querySelector(".pendingNumb");
+    pendingNumb.textContent = listArr.length; //passing the length value in pendingNumb
     let newLiTag = '';
     listArr.forEach((element, index) => {
-        newLiTag = `<li> ${element} <span><i class="fas fa-trash"></i></span></li>`;
+        newLiTag += `<li> ${element} <span onclick="deleteTask(${index})";><i class="fas fa-trash"></i></span></li>`;
     });
     todoList.innerHTML = newLiTag; //adding new li tag inside ul tag
+    inputBox.value = ""; //after adding task clear the input field
+}
+
+//delete tasks function
+function deleteTask(index){
+    let getLocalStorage = localStorage.getItem("New Todo");
+    listArr = JSON.parse(getLocalStorage);
+    listArr.splice(index, 1); //delete or remove the particular indexed li
+
+    // after remove the li again update the local storage
+    localStorage.setItem("New Todo", JSON.stringify(listArr)); //transforming js object into json string
+    showTasks();//calling showTasks function
+
 }
